@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diversificação Internacional</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep:   #0D2B1F;
+    --green-dark:   #134A33;
+    --green-mid:    #1E7A54;
+    --green-teal:   #2AADA0;
+    --green-light:  #4ECDC4;
+    --mint:         #A8E6DF;
+    --white:        #FFFFFF;
+    --off-white:    #F4FAF8;
+    --black:        #080F0D;
+    --gray:         #6B8A80;
+    --border:       rgba(46,173,160,0.22);
+    --border-light: rgba(255,255,255,0.12);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Montserrat',sans-serif; background:var(--off-white); color:var(--black); overflow-x:hidden; }
+
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(13,43,31,0.97); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 48px; height:66px;
+  }
+  .nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.35rem; font-weight:600; color:var(--green-light); letter-spacing:0.04em; }
+  .nav-links { display:flex; gap:28px; }
+  .nav-links a { color:rgba(255,255,255,0.65); text-decoration:none; font-size:0.7rem; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; transition:color .2s; }
+  .nav-links a:hover { color:var(--green-light); }
+
+  .hero {
+    min-height:100vh;
+    background: linear-gradient(160deg, var(--black) 0%, var(--green-deep) 35%, var(--green-dark) 65%, #0A3D2B 100%);
+    display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden; padding-top:66px;
+  }
+  .hero::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(ellipse 70% 55% at 75% 45%, rgba(42,173,160,0.18) 0%, transparent 65%),
+                radial-gradient(ellipse 40% 40% at 20% 70%, rgba(78,205,196,0.08) 0%, transparent 60%);
+  }
+  .hero-grid {
+    position:absolute; inset:0;
+    background-image: linear-gradient(rgba(42,173,160,0.08) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(42,173,160,0.08) 1px, transparent 1px);
+    background-size:70px 70px;
+  }
+  .hero-content { position:relative; text-align:center; max-width:880px; padding:0 32px; }
+  .hero-eyebrow { font-size:0.68rem; letter-spacing:0.3em; text-transform:uppercase; color:var(--green-teal); font-weight:600; margin-bottom:22px; display:flex; align-items:center; justify-content:center; gap:16px; }
+  .hero-eyebrow::before, .hero-eyebrow::after { content:''; width:36px; height:1px; background:var(--green-teal); }
+  .hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2.8rem,7vw,5.5rem); font-weight:300; line-height:1.07; color:var(--white); margin-bottom:24px; }
+  .hero h1 em { font-style:normal; color:var(--green-light); }
+  .hero p { font-size:.95rem; font-weight:300; color:rgba(255,255,255,0.6); line-height:1.9; max-width:560px; margin:0 auto 44px; }
+  .hero-cta { display:inline-flex; gap:14px; flex-wrap:wrap; justify-content:center; }
+  .btn { padding:13px 34px; border-radius:2px; font-size:0.72rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; cursor:pointer; transition:all .25s; border:none; font-family:'Montserrat',sans-serif; }
+  .btn-primary { background:linear-gradient(135deg,var(--green-mid),var(--green-teal)); color:var(--white); }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(42,173,160,0.4); }
+  .btn-outline { background:transparent; color:var(--white); border:1px solid rgba(255,255,255,0.25); }
+  .btn-outline:hover { border-color:var(--green-teal); color:var(--green-light); }
+  .scroll-hint { position:absolute; bottom:32px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; color:rgba(255,255,255,.25); font-size:.6rem; letter-spacing:.15em; text-transform:uppercase; }
+  .scroll-line { width:1px; height:44px; background:linear-gradient(to bottom,rgba(42,173,160,0.6),transparent); animation:scrollDrop 2s ease-in-out infinite; }
+  @keyframes scrollDrop { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  section { padding:88px 0; }
+  .container { max-width:1160px; margin:0 auto; padding:0 40px; }
+  .section-label { font-size:.67rem; letter-spacing:.28em; text-transform:uppercase; color:var(--green-teal); font-weight:600; margin-bottom:10px; display:flex; align-items:center; gap:10px; }
+  .section-label::before { content:''; width:26px; height:1px; background:var(--green-teal); }
+  .section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,4vw,3rem); font-weight:400; line-height:1.15; margin-bottom:44px; }
+  .section-title em { font-style:normal; color:var(--green-mid); }
+  .section-title.light { color:var(--white); }
+  .section-title.light em { color:var(--green-light); }
+  .divider { width:44px; height:2px; background:linear-gradient(90deg,var(--green-mid),var(--green-teal)); margin-bottom:36px; }
+
+  /* SIMULADOR */
+  #comissoes { background:linear-gradient(180deg,var(--green-deep) 0%,var(--black) 100%); }
+  .sim-intro { color:rgba(255,255,255,0.55); font-size:.87rem; line-height:1.85; max-width:640px; margin-bottom:44px; font-weight:300; }
+  .sim-controls { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:18px; margin-bottom:36px; }
+  .sim-field label { display:block; font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--green-teal); margin-bottom:9px; font-weight:600; }
+  .sim-field input, .sim-field select { width:100%; background:rgba(255,255,255,0.06); border:1px solid var(--border); border-radius:2px; color:var(--white); font-family:'Montserrat',sans-serif; font-size:.86rem; padding:11px 14px; outline:none; transition:border-color .2s; }
+  .sim-field input:focus, .sim-field select:focus { border-color:var(--green-teal); }
+  .sim-field select option { background:var(--green-deep); }
+  .assessores-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+  .assessores-title { font-family:'Cormorant Garamond',serif; color:var(--white); font-size:1.4rem; }
+  .btn-add { background:rgba(42,173,160,0.12); border:1px solid var(--border); color:var(--green-light); font-size:.7rem; letter-spacing:.1em; text-transform:uppercase; padding:9px 18px; cursor:pointer; font-family:'Montserrat',sans-serif; font-weight:600; border-radius:2px; transition:all .2s; }
+  .btn-add:hover { background:rgba(42,173,160,0.28); }
+  .assessores-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); gap:14px; margin-bottom:28px; }
+  .assessor-card { background:rgba(255,255,255,0.05); border:1px solid var(--border); border-radius:4px; padding:18px; }
+  .assessor-card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; }
+  .assessor-avatar { width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,var(--green-mid),var(--green-teal)); display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-size:1.05rem; color:var(--white); font-weight:600; }
+  .btn-remove { background:none; border:none; color:rgba(255,255,255,.28); cursor:pointer; font-size:1rem; padding:2px 6px; transition:color .2s; border-radius:2px; }
+  .btn-remove:hover { color:#e05555; }
+  .af { margin-bottom:10px; }
+  .af label { font-size:.61rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gray); margin-bottom:5px; display:block; }
+  .af input { width:100%; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); border-radius:2px; color:var(--white); font-family:'Montserrat',sans-serif; font-size:.8rem; padding:8px 11px; outline:none; transition:border-color .2s; }
+  .af input:focus { border-color:var(--green-teal); }
+  .assessor-result { margin-top:12px; padding-top:12px; border-top:1px solid rgba(42,173,160,.15); display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .result-item { text-align:center; }
+  .result-item .r-label { font-size:.58rem; letter-spacing:.08em; text-transform:uppercase; color:var(--gray); margin-bottom:3px; }
+  .result-item .r-value { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--green-light); font-weight:600; }
+  .summary-wrap { overflow-x:auto; }
+  .summary-table { width:100%; border-collapse:collapse; font-size:.8rem; }
+  .summary-table thead tr { border-bottom:1px solid var(--border); }
+  .summary-table th { text-align:left; padding:11px 15px; font-size:.63rem; letter-spacing:.13em; text-transform:uppercase; color:var(--green-teal); font-weight:600; }
+  .summary-table tbody tr { border-bottom:1px solid rgba(255,255,255,.05); transition:background .15s; }
+  .summary-table tbody tr:hover { background:rgba(255,255,255,.03); }
+  .summary-table td { padding:12px 15px; color:rgba(255,255,255,.75); }
+  .summary-table td.hl { color:var(--green-light); font-weight:600; font-family:'Cormorant Garamond',serif; font-size:.98rem; }
+  .summary-table tfoot td { padding:13px 15px; border-top:2px solid var(--border); color:var(--white); font-weight:600; }
+  .summary-table tfoot td.tot { color:var(--green-light); font-family:'Cormorant Garamond',serif; font-size:1.05rem; }
+
+  /* PROCESSO */
+  #processo { background:var(--off-white); }
+  .processo-intro { font-size:.88rem; line-height:1.9; color:var(--gray); max-width:620px; margin-bottom:48px; font-weight:300; }
+  .upload-banner { border:2px dashed var(--border); border-radius:6px; padding:44px 28px; text-align:center; background:rgba(30,122,84,0.04); cursor:pointer; transition:all .25s; position:relative; margin-bottom:44px; }
+  .upload-banner:hover { border-color:var(--green-teal); background:rgba(42,173,160,.06); }
+  .upload-banner input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+  .upload-icon { width:52px; height:52px; border-radius:50%; background:rgba(42,173,160,.12); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:1.4rem; }
+  .upload-title { font-family:'Cormorant Garamond',serif; font-size:1.35rem; color:var(--green-dark); margin-bottom:6px; }
+  .upload-sub { font-size:.76rem; color:var(--gray); }
+  .upload-sub span { color:var(--green-mid); font-weight:600; }
+  .pdf-frame { width:100%; height:580px; border:1px solid var(--border); border-radius:4px; display:none; margin-bottom:16px; }
+  .pdf-frame.active { display:block; }
+  .steps-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); }
+  .step { padding:30px 26px; border:1px solid rgba(30,122,84,.15); margin:-1px -1px 0 0; background:var(--white); transition:all .2s; }
+  .step:hover { z-index:2; box-shadow:0 8px 32px rgba(13,43,31,.1); transform:translateY(-3px); }
+  .step-num { font-family:'Cormorant Garamond',serif; font-size:2.8rem; font-weight:700; color:rgba(30,122,84,.12); line-height:1; margin-bottom:14px; }
+  .step-title { font-size:.85rem; font-weight:700; color:var(--green-dark); margin-bottom:8px; }
+  .step-desc { font-size:.76rem; color:var(--gray); line-height:1.7; font-weight:300; }
+
+  /* PARCEIROS */
+  #parceiros { background:var(--white); }
+  .parceiros-intro { font-size:.88rem; color:var(--gray); line-height:1.85; max-width:640px; margin-bottom:52px; font-weight:300; }
+  .tabs-nav { display:flex; gap:0; border-bottom:2px solid rgba(30,122,84,.15); margin-bottom:44px; overflow-x:auto; }
+  .tab-btn { padding:14px 22px; font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; background:none; border:none; cursor:pointer; color:var(--gray); font-family:'Montserrat',sans-serif; border-bottom:2px solid transparent; margin-bottom:-2px; white-space:nowrap; transition:all .2s; }
+  .tab-btn.active { color:var(--green-mid); border-bottom-color:var(--green-mid); }
+  .tab-btn:hover:not(.active) { color:var(--green-dark); }
+  .tab-pane { display:none; }
+  .tab-pane.active { display:block; }
+  .parceiro-header { display:grid; grid-template-columns:1fr auto; gap:32px; align-items:start; margin-bottom:36px; }
+  .parceiro-nome { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:400; color:var(--green-dark); margin-bottom:5px; }
+  .parceiro-sub { font-size:.75rem; color:var(--gray); letter-spacing:.05em; }
+  .parceiro-stats { display:flex; gap:14px; flex-wrap:wrap; }
+  .stat-badge { text-align:center; padding:12px 18px; background:rgba(30,122,84,.06); border:1px solid rgba(30,122,84,.15); border-radius:4px; }
+  .stat-val { font-family:'Cormorant Garamond',serif; font-size:1.5rem; color:var(--green-mid); font-weight:600; display:block; }
+  .stat-lab { font-size:.58rem; letter-spacing:.1em; text-transform:uppercase; color:var(--gray); }
+  .parceiro-desc { font-size:.84rem; color:var(--gray); line-height:1.9; margin-bottom:32px; font-weight:300; max-width:760px; }
+  .produtos-parceiro { display:grid; grid-template-columns:repeat(auto-fill,minmax(295px,1fr)); gap:14px; margin-bottom:28px; }
+  .prod-card { border:1px solid rgba(30,122,84,.15); border-radius:4px; overflow:hidden; background:var(--off-white); transition:all .22s; }
+  .prod-card:hover { box-shadow:0 6px 24px rgba(13,43,31,.1); transform:translateY(-2px); border-color:var(--green-teal); }
+  .prod-card-head { padding:16px 18px 12px; border-bottom:1px solid rgba(30,122,84,.1); background:var(--white); }
+  .prod-tag { display:inline-block; font-size:.58rem; letter-spacing:.14em; text-transform:uppercase; color:var(--green-teal); font-weight:700; background:rgba(42,173,160,.08); padding:4px 9px; border-radius:2px; margin-bottom:9px; }
+  .prod-nome { font-family:'Cormorant Garamond',serif; font-size:1.3rem; font-weight:500; color:var(--green-dark); line-height:1.2; }
+  .prod-body { padding:14px 18px; }
+  .prod-desc { font-size:.77rem; color:var(--gray); line-height:1.75; margin-bottom:12px; font-weight:300; }
+  .prod-badges { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:14px; }
+  .prod-badge { font-size:.62rem; padding:4px 8px; border:1px solid rgba(30,122,84,.2); border-radius:2px; color:var(--gray); }
+  .prod-upload { border:1px dashed rgba(42,173,160,.3); border-radius:3px; padding:12px; text-align:center; cursor:pointer; transition:all .2s; position:relative; }
+  .prod-upload:hover { border-color:var(--green-teal); background:rgba(42,173,160,.03); }
+  .prod-upload input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+  .prod-upload.has-pdf { border-style:solid; border-color:rgba(42,173,160,.5); background:rgba(42,173,160,.04); }
+  .prod-upload-text { font-size:.68rem; color:var(--gray); }
+  .prod-upload-text strong { color:var(--green-mid); }
+  .prod-iframe { width:100%; height:360px; margin-top:10px; border:1px solid var(--border); border-radius:3px; display:none; }
+  .prod-iframe.active { display:block; }
+  .prod-fname { font-size:.68rem; color:var(--green-mid); margin-top:6px; display:none; font-weight:600; }
+  .prod-fname.active { display:flex; align-items:center; gap:5px; }
+  .parceiro-manual { margin-top:24px; border-top:1px solid rgba(30,122,84,.1); padding-top:24px; }
+  .parceiro-manual-title { font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--green-teal); font-weight:600; margin-bottom:10px; }
+  .p-upload-zone { border:1px dashed rgba(42,173,160,.35); border-radius:4px; padding:20px; text-align:center; position:relative; cursor:pointer; transition:all .2s; background:rgba(42,173,160,.02); }
+  .p-upload-zone:hover { border-color:var(--green-teal); background:rgba(42,173,160,.05); }
+  .p-upload-zone input[type=file] { position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; height:100%; }
+  .p-upload-zone .puz-text { font-size:.78rem; color:var(--gray); }
+  .p-upload-zone.has-pdf { border-style:solid; border-color:rgba(42,173,160,.5); }
+  .p-iframe { width:100%; height:480px; margin-top:12px; border:1px solid var(--border); border-radius:4px; display:none; }
+  .p-iframe.active { display:block; }
+
+  footer { background:var(--green-deep); border-top:1px solid var(--border); padding:52px 0 36px; text-align:center; }
+  .footer-logo { font-family:'Cormorant Garamond',serif; font-size:1.7rem; font-weight:300; color:var(--green-light); margin-bottom:10px; }
+  .footer-tagline { font-size:.7rem; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.28); margin-bottom:20px; }
+  .footer-contact { font-size:.78rem; color:rgba(255,255,255,.45); margin-bottom:6px; }
+  .footer-contact a { color:var(--green-teal); text-decoration:none; }
+  .footer-divider { width:52px; height:1px; background:var(--border); margin:20px auto; }
+  .footer-copy { font-size:.68rem; color:rgba(255,255,255,.2); letter-spacing:.06em; }
+
+  @media(max-width:768px){
+    nav{padding:0 18px;} .nav-links{display:none;}
+    .container{padding:0 18px;} section{padding:64px 0;}
+    .parceiro-header{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Diversificação Internacional</div>
+  <div class="nav-links">
+    <a href="#comissoes">Comissões</a>
+    <a href="#processo">Processo</a>
+    <a href="#parceiros">Parceiros</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Manual do Consultor — Uso Interno Exclusivo</div>
+    <h1>Soluções de<br><em>Investimento Global</em></h1>
+    <p>Portfólio completo de parceiros internacionais, simulador de comissões e processo operacional para assessores da Diversificação Internacional.</p>
+    <div class="hero-cta">
+      <a href="#comissoes" class="btn btn-primary">Simular Comissões</a>
+      <a href="#parceiros" class="btn btn-outline">Ver Parceiros</a>
+    </div>
+  </div>
+  <div class="scroll-hint"><div class="scroll-line"></div></div>
+</section>
+
+<!-- SIMULADOR -->
+<section id="comissoes">
+  <div class="container">
+    <div class="section-label">Gestão Comercial</div>
+    <div class="section-title light">Simulador de <em>Comissões</em></div>
+    <p class="sim-intro">Configure o produto, volume e prazo da operação. Adicione os assessores e defina a participação de cada um — os valores são calculados automaticamente.</p>
+
+    <div class="sim-controls">
+      <div class="sim-field">
+        <label>Parceiro / Produto</label>
+        <select id="sim-produto">
+          <option value="">Selecione</option>
+          <optgroup label="── Investors Trust ──">
+            <option>ITA — Evolution (Aportes Regulares)</option>
+            <option>ITA — S&P 500 com Proteção de Capital</option>
+            <option>ITA — Platinum (Aporte Único)</option>
+            <option>ITA — Portfólio Renda Fixa</option>
+            <option>ITA — Access Portfolio</option>
+          </optgroup>
+          <optgroup label="── Dominion Group ──">
+            <option>Dominion — My Savings (Aportes Regulares)</option>
+            <option>Dominion — My Investment (Aporte Único)</option>
+          </optgroup>
+          <optgroup label="── StoneX ──">
+            <option>StoneX — Conta Global de Investimentos</option>
+          </optgroup>
+          <optgroup label="── Seguro de Vida ──">
+            <option>Pan American — Seg. Vida Tradicional</option>
+            <option>Pan American — Indexado S&P 500 / Nasdaq</option>
+            <option>Pan American — Critical Illness</option>
+            <option>American Fidelity — Select Term</option>
+            <option>American Fidelity — Ultra 3 (Universal)</option>
+            <option>American Fidelity — IUL Indexa Pro</option>
+            <option>American Fidelity — Doenças Críticas</option>
+          </optgroup>
+          <optgroup label="── Seguro Saúde ──">
+            <option>Saúde Internacional — Vumi</option>
+            <option>Saúde Internacional — Redbridge</option>
+            <option>Saúde Internacional — Best Doctors</option>
+            <option>Saúde Internacional — Trawick</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="sim-field">
+        <label>Volume / Prêmio (R$)</label>
+        <input type="number" id="sim-volume" value="500000">
+      </div>
+      <div class="sim-field">
+        <label>Comissão Total (%)</label>
+        <input type="number" id="sim-comissao" step="0.01" value="1.5">
+      </div>
+      <div class="sim-field">
+        <label>Prazo (anos)</label>
+        <input type="number" id="sim-prazo" value="10">
+      </div>
+    </div>
+
+    <div>
+      <div class="assessores-header">
+        <div class="assessores-title">Assessores</div>
+        <button class="btn-add" onclick="addAssessor()">+ Adicionar Assessor</button>
+      </div>
+      <div class="assessores-grid" id="assessores-grid"></div>
+    </div>
+
+    <div class="summary-wrap">
+      <table class="summary-table">
+        <thead><tr>
+          <th>Assessor</th><th>Produto</th><th>Volume (R$)</th>
+          <th>% Participação</th><th>Comissão Bruta (R$)</th><th>Anualizada (R$)</th>
+        </tr></thead>
+        <tbody id="summary-body"></tbody>
+        <tfoot id="summary-foot"></tfoot>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSO -->
+<section id="processo">
+  <div class="container">
+    <div class="section-label">Onboarding & Operações</div>
+    <div class="section-title">Processo <em>Operacional</em></div>
+    <p class="processo-intro">Fluxo completo desde a qualificação do cliente até a confirmação da alocação. Anexe abaixo o documento oficial do processo operacional para consulta rápida.</p>
+
+    <div class="upload-banner" id="proc-banner">
+      <input type="file" accept=".pdf" onchange="handleProcPDF(this)">
+      <div class="upload-icon">📋</div>
+      <div class="upload-title" id="proc-title">Processo Operacional — PDF</div>
+      <p class="upload-sub" id="proc-sub">Arraste ou clique para anexar — <span>Clique para selecionar</span></p>
+    </div>
+    <iframe class="pdf-frame" id="proc-iframe"></iframe>
+
+    <div class="steps-grid">
+      <div class="step"><div class="step-num">01</div><div class="step-title">Qualificação & Suitability</div><div class="step-desc">Análise de perfil, suitability e elegibilidade para cada produto, conforme o momento patrimonial e horizonte do cliente.</div></div>
+      <div class="step"><div class="step-num">02</div><div class="step-title">Apresentação da Proposta</div><div class="step-desc">Elaboração do relatório personalizado com simulações, comparativos de produtos e justificativa da alocação recomendada.</div></div>
+      <div class="step"><div class="step-num">03</div><div class="step-title">Documentação & KYC</div><div class="step-desc">Coleta e validação dos documentos exigidos pelo parceiro (PF ou PJ): identidade, comprovante, extratos e origem dos recursos.</div></div>
+      <div class="step"><div class="step-num">04</div><div class="step-title">Underwriting & Compliance</div><div class="step-desc">Para seguros de vida: exames médicos domiciliares. Para investimentos: aprovação e validação regulatória pelo parceiro.</div></div>
+      <div class="step"><div class="step-num">05</div><div class="step-title">Liquidação & Custódia</div><div class="step-desc">Transferência dos recursos, emissão da apólice ou abertura da conta e registro na plataforma do custodiante internacional.</div></div>
+      <div class="step"><div class="step-num">06</div><div class="step-title">Pós-venda & Monitoramento</div><div class="step-desc">Relatórios periódicos, suporte contínuo ao cliente e assessor, e revisão do portfólio conforme mudanças de cenário.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARCEIROS -->
+<section id="parceiros">
+  <div class="container">
+    <div class="section-label">Portfólio de Soluções</div>
+    <div class="section-title">Nossos <em>Parceiros</em></div>
+    <div class="divider"></div>
+    <p class="parceiros-intro">Cada aba apresenta um parceiro com seus produtos detalhados. Anexe PDFs por produto ou o manual completo do parceiro para consulta rápida durante o atendimento.</p>
+
+    <div class="tabs-nav">
+      <button class="tab-btn active" onclick="showTab('ita',this)">Investors Trust</button>
+      <button class="tab-btn" onclick="showTab('dominion',this)">Dominion Group</button>
+      <button class="tab-btn" onclick="showTab('stonex',this)">StoneX</button>
+      <button class="tab-btn" onclick="showTab('vida',this)">Seg. Vida Internacional</button>
+      <button class="tab-btn" onclick="showTab('saude',this)">Seg. Saúde Internacional</button>
+    </div>
+
+    <!-- ITA -->
+    <div class="tab-pane active" id="tab-ita">
+      <div class="parceiro-header">
+        <div>
+          <div class="parceiro-nome">Investors Trust Assurance SPC</div>
+          <div class="parceiro-sub">Cayman Islands · Labuan · Porto Rico · Fundado em 2002</div>
+        </div>
+        <div class="parceiro-stats">
+          <div class="stat-badge"><span class="stat-val">100+</span><span class="stat-lab">Países</span></div>
+          <div class="stat-badge"><span class="stat-val">115K</span><span class="stat-lab">Clientes</span></div>
+          <div class="stat-badge"><span class="stat-val">$5,3B</span><span class="stat-lab">AUM</span></div>
+          <div class="stat-badge"><span class="stat-val">A-</span><span class="stat-lab">AM Best</span></div>
+        </div>
+      </div>
+      <p class="parceiro-desc">Grupo internacional de seguradoras especializado em soluções de investimento de médio e longo prazo via modelo Unit Linked — seguro de vida com componente de investimento. Custódia segregada pelo J.P. Morgan e BNY Mellon. Rating A- (Excelente) pela AM Best reafirmado por anos consecutivos. Regulado nas Cayman Islands, Labuan (Malásia) e Porto Rico.</p>
+      <div class="produtos-parceiro" id="prods-ita"></div>
+      <div class="parceiro-manual">
+        <div class="parceiro-manual-title">📁 Anexar Manual Completo — Investors Trust</div>
+        <div class="p-upload-zone" id="pzone-ita">
+          <input type="file" accept=".pdf" onchange="handleManual(this,'piframe-ita','pzone-ita')">
+          <div class="puz-text">📎 Clique para anexar o manual ou material de apoio em PDF</div>
+        </div>
+        <iframe class="p-iframe" id="piframe-ita"></iframe>
+      </div>
+    </div>
+
+    <!-- DOMINION -->
+    <div class="tab-pane" id="tab-dominion">
+      <div class="parceiro-header">
+        <div>
+          <div class="parceiro-nome">Dominion Group</div>
+          <div class="parceiro-sub">Guernsey, Reino Unido · Regulado pela GFSC e FCA · Fundado em 2004</div>
+        </div>
+        <div class="parceiro-stats">
+          <div class="stat-badge"><span class="stat-val">AA-</span><span class="stat-lab">S&P — Guernsey</span></div>
+          <div class="stat-badge"><span class="stat-val">BNY</span><span class="stat-lab">Custódia Segr.</span></div>
+          <div class="stat-badge"><span class="stat-val">PwC</span><span class="stat-lab">Auditoria</span></div>
+        </div>
+      </div>
+      <p class="parceiro-desc">Regulada pela GFSC e FCA (Reino Unido), em conformidade com 48/49 recomendações do GAFI. Recursos em contas totalmente segregadas no BNY Mellon (USD 55T sob custódia). Auditada pela PwC. Guernsey integra a lista branca da OCDE com rating AA- pela S&P.</p>
+      <div class="produtos-parceiro" id="prods-dominion"></div>
+      <div class="parceiro-manual">
+        <div class="parceiro-manual-title">📁 Anexar Manual Completo — Dominion Group</div>
+        <div class="p-upload-zone" id="pzone-dominion">
+          <input type="file" accept=".pdf" onchange="handleManual(this,'piframe-dominion','pzone-dominion')">
+          <div class="puz-text">📎 Clique para anexar o manual ou material de apoio em PDF</div>
+        </div>
+        <iframe class="p-iframe" id="piframe-dominion"></iframe>
+      </div>
+    </div>
+
+    <!-- STONEX -->
+    <div class="tab-pane" id="tab-stonex">
+      <div class="parceiro-header">
+        <div>
+          <div class="parceiro-nome">StoneX Group Inc.</div>
+          <div class="parceiro-sub">Nova York, EUA · NASDAQ: SNEX · Fortune 500 · Fundado em 1924</div>
+        </div>
+        <div class="parceiro-stats">
+          <div class="stat-badge"><span class="stat-val">180+</span><span class="stat-lab">Países</span></div>
+          <div class="stat-badge"><span class="stat-val">$4,6T</span><span class="stat-lab">Vol. Negociado</span></div>
+          <div class="stat-badge"><span class="stat-val">$31B+</span><span class="stat-lab">Custódia</span></div>
+          <div class="stat-badge"><span class="stat-val">54K+</span><span class="stat-lab">Clientes Inst.</span></div>
+        </div>
+      </div>
+      <p class="parceiro-desc">Conglomerado global listado na NASDAQ (SNEX) e integrante do Fortune 500. Acesso a 40+ bolsas globais, 75+ mercados de ações e operações cambiais em 140+ moedas. Regulado pela SEC, FINRA e CFTC. Proteção SIPC (USD 250K) e FDIC para ativos nos EUA.</p>
+      <div class="produtos-parceiro" id="prods-stonex"></div>
+      <div class="parceiro-manual">
+        <div class="parceiro-manual-title">📁 Anexar Manual Completo — StoneX</div>
+        <div class="p-upload-zone" id="pzone-stonex">
+          <input type="file" accept=".pdf" onchange="handleManual(this,'piframe-stonex','pzone-stonex')">
+          <div class="puz-text">📎 Clique para anexar o manual ou material de apoio em PDF</div>
+        </div>
+        <iframe class="p-iframe" id="piframe-stonex"></iframe>
+      </div>
+    </div>
+
+    <!-- VIDA -->
+    <div class="tab-pane" id="tab-vida">
+      <div class="parceiro-header">
+        <div>
+          <div class="parceiro-nome">Seguro de Vida Internacional</div>
+          <div class="parceiro-sub">Pan American Life Insurance (PALIG) · American Fidelity Assurance</div>
+        </div>
+        <div class="parceiro-stats">
+          <div class="stat-badge"><span class="stat-val">USD</span><span class="stat-lab">Denominação</span></div>
+          <div class="stat-badge"><span class="stat-val">A+</span><span class="stat-lab">AM Best (AFid.)</span></div>
+          <div class="stat-badge"><span class="stat-val">A</span><span class="stat-lab">Rating (PALIG)</span></div>
+        </div>
+      </div>
+      <p class="parceiro-desc">Apólices emitidas fora do Brasil em dólar americano, com cobertura global. Não sofrem reajustes inflacionários, estruturadas via trust para eficiência sucessória sem inventário judicial. Pan American Life com 110+ anos e presença em 20+ países. American Fidelity com rating A+ pela AM Best desde 1982 e USD 10B+ em ativos.</p>
+      <div class="produtos-parceiro" id="prods-vida"></div>
+      <div class="parceiro-manual">
+        <div class="parceiro-manual-title">📁 Anexar Manual Completo — Seguro de Vida</div>
+        <div class="p-upload-zone" id="pzone-vida">
+          <input type="file" accept=".pdf" onchange="handleManual(this,'piframe-vida','pzone-vida')">
+          <div class="puz-text">📎 Clique para anexar o manual ou material de apoio em PDF</div>
+        </div>
+        <iframe class="p-iframe" id="piframe-vida"></iframe>
+      </div>
+    </div>
+
+    <!-- SAÚDE -->
+    <div class="tab-pane" id="tab-saude">
+      <div class="parceiro-header">
+        <div>
+          <div class="parceiro-nome">Seguro Saúde Internacional</div>
+          <div class="parceiro-sub">Vumi · Redbridge · Best Doctors · American Fidelity · Trawick · Ever</div>
+        </div>
+        <div class="parceiro-stats">
+          <div class="stat-badge"><span class="stat-val">Global</span><span class="stat-lab">Cobertura</span></div>
+          <div class="stat-badge"><span class="stat-val">USD</span><span class="stat-lab">Moeda</span></div>
+          <div class="stat-badge"><span class="stat-val">6</span><span class="stat-lab">Parceiras</span></div>
+        </div>
+      </div>
+      <p class="parceiro-desc">Planos de assistência médica com cobertura dentro e fora do Brasil. Liberdade total de escolha médica e hospitalar em qualquer país. Reembolso para consultas e exames; pagamento direto para internações. Indicado para executivos, empresários, famílias com mobilidade internacional e estudantes em intercâmbio.</p>
+      <div class="produtos-parceiro" id="prods-saude"></div>
+      <div class="parceiro-manual">
+        <div class="parceiro-manual-title">📁 Anexar Manual Completo — Seguro Saúde</div>
+        <div class="p-upload-zone" id="pzone-saude">
+          <input type="file" accept=".pdf" onchange="handleManual(this,'piframe-saude','pzone-saude')">
+          <div class="puz-text">📎 Clique para anexar o manual ou material de apoio em PDF</div>
+        </div>
+        <iframe class="p-iframe" id="piframe-saude"></iframe>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Diversificação Internacional</div>
+  <div class="footer-tagline">Manual do Consultor · Uso Interno Exclusivo</div>
+  <div class="footer-contact">Dúvidas: <a href="tel:+17868461746">+1 (786) 846-1746</a> · <a href="https://dolarize.me" target="_blank">Dolarize.me</a></div>
+  <div class="footer-divider"></div>
+  <div class="footer-copy">© 2025 Diversificação Internacional · Todos os direitos reservados</div>
+</footer>
+
+<script>
+/* ── DADOS ── */
+const DADOS = {
+  ita:[
+    {tag:'Aportes Regulares',nome:'Evolution — Poupança Sistemática',desc:'Plano de contribuições periódicas com bônus de fidelidade crescentes. Prazos de 5 a 25 anos. Aportes anuais a partir de USD 1.800. Taxas administrativas decrescentes (mais elevadas no início, incentivando permanência).',badges:['USD 1.800/ano mín.','Prazos 5–25 anos','Bônus Fidelidade','Taxas Decrescentes']},
+    {tag:'Aportes Regulares',nome:'S&P 500 — Proteção de Capital',desc:'Exposição ao principal índice dos EUA com proteção de 100% do capital ao final do prazo contratado. Mesmo em queda do índice, o investidor recebe pelo menos o valor investido. Prazos de 10, 15 e 20 anos.',badges:['Proteção 100% Capital','10 / 15 / 20 anos','S&P 500','USD 2.400/ano mín.']},
+    {tag:'Aporte Único',nome:'Platinum — Flexibilidade de Gestão',desc:'Estrutura de investimento com acesso a ampla gama de fundos globais, resgates parciais permitidos e rebalanceamento dinâmico de portfólio. Liquidez total sujeita a taxas regressivas conforme tempo de permanência.',badges:['Aporte Único','Resgates Parciais','Fundos Globais','Gestão Dinâmica']},
+    {tag:'Aporte Único',nome:'Portfólio de Renda Fixa',desc:'Proteção de 100% do capital com juros pré-definidos por prazo. Disponível em termos de 3, 5, 7 e 10 anos. Alternativa à renda fixa tradicional dentro do wrapper jurídico de seguro unit-linked.',badges:['100% Capital Protegido','Juros Pré-fixados','3/5/7/10 anos','Unit-Linked']},
+    {tag:'Aporte Único',nome:'Access Portfolio — Arquitetura Aberta',desc:'Produto mais sofisticado da ITA. Acesso a ações, títulos, ETFs, fundos mútuos e notas estruturadas em uma única apólice. Aportes únicos a partir de USD 75.000 em USD, EUR ou GBP. Resgates parciais gratuitos.',badges:['USD 75.000+ mín.','USD / EUR / GBP','Arquitetura Aberta','Portfólio Personalizado']},
+  ],
+  dominion:[
+    {tag:'Aportes Regulares',nome:'My Savings — Poupança Internacional',desc:'Poupança com custos decrescentes de 2,65% a.a. (5 anos) até 1,15% a.a. (20 anos). Setup fee único de USD 25. Aportes a partir de USD 250/mês. Sem custo para troca de fundos, aportes omitidos ou resgates parciais. Permite planos corporativos.',badges:['USD 250/mês mín.','Setup USD 25','Sem custo resgates','Planos Corporativos']},
+    {tag:'Aporte Único',nome:'My Investment — Aporte Estratégico',desc:'Estrutura de aporte único a partir de USD 10.000, com reforços a partir de USD 1.500. Anos 1–5: 1,6% a.a. sobre contribuições (sem cobrança sobre rendimentos). A partir do 6º ano: 1,0% a.a. sobre saldo total. Proteção PIP de até 80%.',badges:['USD 10.000 mín.','1,6% a.a. (anos 1–5)','1,0% a.a. (6º+ ano)','PIP 80% — S&P 500']},
+  ],
+  stonex:[
+    {tag:'Wealth Management',nome:'Conta Global de Investimentos',desc:'Conta multimoedas nos EUA a partir de USD 100.000. Acesso a ações, renda fixa, ETFs, fundos internacionais, opções, futuros e estruturados. Cartão de débito Visa, até 5 titulares, designação de beneficiários. Advisory Fee negociável até 2% a.a.',badges:['USD 100.000+ mín.','Até 5 Titulares','Cartão Visa','SEC / FINRA / CFTC']},
+  ],
+  vida:[
+    {tag:'Pan American',nome:'Seg. Vida Tradicional',desc:'Apólice em USD focada em proteção e sucessão patrimonial. Capital não compõe herança, sem inventário judicial, pago diretamente aos beneficiários. Cobertura global sem restrição de local do óbito. Apólice incontestável após período contratual.',badges:['Em USD','Sem Inventário','Cobertura Global','Rating A — PALIG']},
+    {tag:'Pan American',nome:'Produtos Indexados (S&P 500 / Nasdaq)',desc:'Combina proteção securitária com estratégia financeira atrelada ao S&P 500, Nasdaq ou Eurostoxx. Indicado para clientes com visão de longo prazo, perfil patrimonial e compreensão de horizonte de investimento.',badges:['S&P 500','Nasdaq','Eurostoxx','Planejamento Longo Prazo']},
+    {tag:'Pan American',nome:'Doenças Graves — Critical Illness',desc:'Indenização paga em vida no momento do diagnóstico. Capital de livre utilização, complementa planos de saúde. Indicado para profissionais economicamente ativos com dependentes financeiros.',badges:['Pago em Vida','Capital Livre','Complementa Plano Saúde','Profissionais Ativos']},
+    {tag:'American Fidelity',nome:'Select Term — Seguro Temporário',desc:'Produto não resgatável com prazo definido. Contratos por período (10, 15, 20 ou 30 anos) ou por idade (até 85 ou 100 anos). Exames médicos domiciliares via Samplemed. Após aprovação, cobertura não pode ser revogada pela seguradora.',badges:['Não Resgatável','Até 30 anos / 100 anos','A+ AM Best','Exame Domiciliar']},
+    {tag:'American Fidelity',nome:'Ultra 3 — Seguro Universal',desc:'Seguro universal resgatável com acumulação atrelada à renda fixa americana (~3% a.a. em USD). Cobertura válida até 121 anos do segurado. Resgatável após período de carência contratual.',badges:['~3% a.a. em USD','Até 121 anos de idade','Resgatável','Renda Fixa USA']},
+    {tag:'American Fidelity',nome:'IUL Indexa Pro — Produto Carro-Chefe',desc:'Atrelado ao desempenho do S&P 500 com teto de rentabilidade de 14% a.a. e piso de 0% — nenhuma perda em cenários de queda. Cobertura mínima de USD 250K. Saldo 100% resgatável sem penalidades a partir do 15º ano de apólice.',badges:['S&P 500','Teto 14% / Piso 0%','USD 250K+ cobertura','Resgatável no 15º ano']},
+    {tag:'American Fidelity',nome:'Apólice de Doenças Críticas',desc:'Independente do seguro de vida. Cobre câncer, ataque cardíaco, insuficiência renal, transplante de órgãos, Alzheimer e outros. Cobertura de USD 100K a USD 500K. Período de sobrevivência obrigatório de 28 dias.',badges:['USD 100K–500K','28 dias sobrevivência','Múltiplas Doenças','Não Resgatável']},
+  ],
+  saude:[
+    {tag:'Seguro Saúde',nome:'Vumi International',desc:'Plano de saúde internacional com ampla cobertura global e liberdade de escolha médica. Pagamento direto para internações e cirurgias. Indicado para famílias, executivos e pessoas com mobilidade entre países.',badges:['Cobertura Global','Livre Escolha','Pagamento Direto','Família / Executivos']},
+    {tag:'Seguro Saúde',nome:'Redbridge',desc:'Solução de saúde internacional com pagamento periódico (trimestral, semestral ou anual). Reembolso para consultas e exames; pagamento direto para internações. Alta flexibilidade de plano e cobertura.',badges:['Reembolso','Pagamento Direto','Trimestral/Semestral','Internacional']},
+    {tag:'Seguro Saúde',nome:'Best Doctors',desc:'Especializado em acesso a médicos de excelência e segunda opinião médica ao redor do mundo. Indicado para clientes que buscam padrão premium de atendimento e acesso a especialistas globais.',badges:['Segunda Opinião Médica','Especialistas Globais','Alta Complexidade','Padrão Premium']},
+    {tag:'Seguro Saúde',nome:'Trawick International',desc:'Cobertura médica para estudantes em intercâmbio, expatriados e profissionais com mobilidade entre dois ou mais países. Custo-benefício competitivo com abrangência geográfica ampla.',badges:['Intercâmbio','Expatriados','Multi-país','Custo-benefício']},
+  ],
+};
+
+/* ── RENDER PRODUTOS ── */
+let pid = 0;
+function renderProdutos(parceiro){
+  const c = document.getElementById('prods-'+parceiro);
+  if(!c) return;
+  c.innerHTML = (DADOS[parceiro]||[]).map(p=>{
+    const id = pid++;
+    return `<div class="prod-card">
+      <div class="prod-card-head">
+        <div class="prod-tag">${p.tag}</div>
+        <div class="prod-nome">${p.nome}</div>
+      </div>
+      <div class="prod-body">
+        <div class="prod-desc">${p.desc}</div>
+        <div class="prod-badges">${p.badges.map(b=>`<span class="prod-badge">${b}</span>`).join('')}</div>
+        <div class="prod-upload" id="pu${id}">
+          <input type="file" accept=".pdf" onchange="handleProd(this,${id})">
+          <div class="prod-upload-text" id="pt${id}">📎 <strong>Anexar PDF</strong> com características</div>
+        </div>
+        <div class="prod-fname" id="pf${id}">📄 <span id="ps${id}"></span></div>
+        <iframe class="prod-iframe" id="pi${id}"></iframe>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function handleProd(input, id){
+  if(!input.files[0]) return;
+  const url = URL.createObjectURL(input.files[0]);
+  document.getElementById('pi'+id).src=url; document.getElementById('pi'+id).classList.add('active');
+  document.getElementById('pf'+id).classList.add('active'); document.getElementById('ps'+id).textContent=input.files[0].name;
+  document.getElementById('pu'+id).classList.add('has-pdf');
+  document.getElementById('pt'+id).innerHTML='✅ <strong>Anexado</strong> — clique para substituir';
+}
+
+function handleManual(input, iframeId, zoneId){
+  if(!input.files[0]) return;
+  const url = URL.createObjectURL(input.files[0]);
+  document.getElementById(iframeId).src=url; document.getElementById(iframeId).classList.add('active');
+  document.getElementById(zoneId).classList.add('has-pdf');
+  document.getElementById(zoneId).querySelector('.puz-text').textContent='✅ '+input.files[0].name+' — clique para substituir';
+}
+
+function handleProcPDF(input){
+  if(!input.files[0]) return;
+  const url = URL.createObjectURL(input.files[0]);
+  document.getElementById('proc-iframe').src=url; document.getElementById('proc-iframe').classList.add('active');
+  document.getElementById('proc-title').textContent='✅ '+input.files[0].name;
+  document.getElementById('proc-sub').innerHTML='PDF carregado — clique para substituir';
+}
+
+/* ── TABS ── */
+function showTab(id, btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active'); btn.classList.add('active');
+}
+
+/* ── SIMULADOR ── */
+let assessores=[{nome:'Assessor 1',perc:60},{nome:'Assessor 2',perc:40}], ac=3;
+
+function addAssessor(){ assessores.push({nome:'Assessor '+ac++,perc:50}); renderAssessores(); calcular(); }
+function removeAssessor(i){ assessores.splice(i,1); renderAssessores(); calcular(); }
+
+function renderAssessores(){
+  const g=document.getElementById('assessores-grid');
+  const vol=parseFloat(document.getElementById('sim-volume').value)||0;
+  const com=parseFloat(document.getElementById('sim-comissao').value)||0;
+  g.innerHTML=assessores.map((a,i)=>{
+    const cb=vol*(com/100)*(a.perc/100);
+    const ini=a.nome.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)||'?';
+    return `<div class="assessor-card">
+      <div class="assessor-card-header">
+        <div class="assessor-avatar">${ini}</div>
+        ${assessores.length>1?`<button class="btn-remove" onclick="removeAssessor(${i})">✕</button>`:''}
+      </div>
+      <div class="af"><label>Nome</label><input type="text" value="${a.nome}" oninput="assessores[${i}].nome=this.value;calcular()"></div>
+      <div class="af"><label>% sobre comissão total</label><input type="number" value="${a.perc}" min="0" max="100" step="1" oninput="assessores[${i}].perc=parseFloat(this.value)||0;calcular()"></div>
+      <div class="assessor-result">
+        <div class="result-item"><div class="r-label">Comissão Bruta</div><div class="r-value" id="rc${i}">${fmt(cb)}</div></div>
+        <div class="result-item"><div class="r-label">% Efetiva</div><div class="r-value" id="rp${i}">${a.perc}%</div></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function calcular(){
+  const vol=parseFloat(document.getElementById('sim-volume').value)||0;
+  const com=parseFloat(document.getElementById('sim-comissao').value)||0;
+  const prazo=parseFloat(document.getElementById('sim-prazo').value)||1;
+  const sel=document.getElementById('sim-produto');
+  const prod=sel.options[sel.selectedIndex]?.text||'—';
+  let total=0;
+  const rows=assessores.map((a,i)=>{
+    const cb=vol*(com/100)*(a.perc/100);
+    const anual=cb/prazo; total+=cb;
+    const el=document.getElementById('rc'+i); if(el) el.textContent=fmt(cb);
+    const ep=document.getElementById('rp'+i); if(ep) ep.textContent=a.perc+'%';
+    return `<tr><td>${a.nome}</td><td>${prod}</td><td>${fmt(vol)}</td><td>${a.perc}%</td><td class="hl">${fmt(cb)}</td><td class="hl">${fmt(anual)}</td></tr>`;
+  });
+  document.getElementById('summary-body').innerHTML=rows.join('');
+  document.getElementById('summary-foot').innerHTML=`<tr>
+    <td colspan="4" style="font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35)">TOTAL CONSOLIDADO</td>
+    <td class="tot">${fmt(total)}</td><td class="tot">${fmt(total/prazo)}</td>
+  </tr>`;
+}
+
+function fmt(v){ if(!v||isNaN(v)) return 'R$ 0,00'; return 'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded',()=>{
+  Object.keys(DADOS).forEach(p=>renderProdutos(p));
+  renderAssessores(); calcular();
+  ['sim-volume','sim-comissao','sim-prazo','sim-produto'].forEach(id=>{
+    const el=document.getElementById(id);
+    el?.addEventListener('input',()=>{renderAssessores();calcular();});
+    el?.addEventListener('change',()=>{renderAssessores();calcular();});
+  });
+});
+</script>
+</body>
+</html>
